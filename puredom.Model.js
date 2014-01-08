@@ -1,5 +1,14 @@
 /** A synchronized model base class. */
-define(['puredom'], function($) {
+(function(factory) {
+	if (typeof window.define==='function' && window.define.amd) {
+		window.define(['puredom'], factory);
+	}
+	else {
+		factory(window.puredom);
+	}
+}(function($) {
+	/** @exports Model as puredom.Model */
+	
 	function noop(){}
 	
 	function Model(attributes, callback) {
@@ -40,7 +49,7 @@ define(['puredom'], function($) {
 		set : function(key, value) {
 			var old = this.attributes[key];
 			this.attributes[key] = value;
-			this.fireEvent('change', [key, value, old])
+			this.fireEvent('change', [key, value, old]);
 			this.sync();
 		},
 
@@ -143,4 +152,4 @@ define(['puredom'], function($) {
 	// Come on, it'll be fun
 	$.Model = Model.Model = Model;
 	return Model;
-});
+}));
