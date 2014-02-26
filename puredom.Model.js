@@ -12,6 +12,8 @@
 	function noop(){}
 	
 	function Model(attributes, callback) {
+		$.EventEmitter.call(this);
+		
 		if (arguments.length===3) {
 			callback = arguments[2];
 			this.db = arguments[1];
