@@ -9,14 +9,18 @@
 }(function($) {
 	/** @exports Model as puredom.Model */
 	
-	function noop(){}
+	function noop() {}
+
+	function getId() { return (Date.now() + Math.random()).toString(36).replace('.','-'); }
 	
 	function Model(attributes, callback) {
+		var args = [].slice.call(arguments),
+			self = this;
 		$.EventEmitter.call(this);
 		
 		if (arguments.length===3) {
-			callback = arguments[2];
-			this.db = arguments[1];
+			callback = args[2];
+			this.db = args[1];
 		}
 		callback = callback || noop;
 
@@ -33,9 +37,11 @@
 			this.fetch(callback);
 		}
 		else {
-			this.localId = (Date.now() + Math.random()).toString(36);
+			this.localId = getId();
 			setTimeout(function() {
-				callback();
+				self.fromCache();
+				callback(self);
+				self = null;
 			}, 1);
 		}
 	}
@@ -52,6 +58,7 @@
 			var old = this.attributes[key];
 			this.attributes[key] = value;
 			this.fireEvent('change', [key, value, old]);
+			this.cache();
 			this.sync();
 		},
 
