@@ -5,8 +5,5 @@
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.2.7"
-  },
-  "dependencies": {
-    "grunt-contrib-uglify": "~0.2.7"
   }
 }
