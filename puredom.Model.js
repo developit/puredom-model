@@ -1,10 +1,13 @@
 /** A synchronized model base class. */
 (function(factory) {
-	if (typeof window.define==='function' && window.define.amd) {
-		window.define(['puredom'], factory);
+	if (typeof define==='function' && define.amd) {
+		define(['puredom'], factory);
+	}
+	else if (typeof module==='object' && typeof require==='function') {
+		module.exports = factory(require('puredom'));
 	}
 	else {
-		factory(window.puredom);
+		window.puredom.Model = factory(window.puredom);
 	}
 }(function($) {
 	/** @exports Model as puredom.Model */
@@ -40,7 +43,7 @@
 			this.localId = getId();
 			setTimeout(function() {
 				self.fromCache();
-				callback(self);
+				callback.call(self, null, self.attributes);
 				self = null;
 			}, 1);
 		}
@@ -51,13 +54,14 @@
 	$.extend(Model.prototype, {
 		type : 'Model',
 		url : '/api/{{type}}/{{id}}',
+		idPath : 'id',
 		synced : false,
 		attributes : {},
 
 		set : function(key, value) {
 			var old = this.attributes[key];
 			this.attributes[key] = value;
-			this.fireEvent('change', [key, value, old]);
+			this.emit('change', [key, value, old]);
 			this.cache();
 			this.sync();
 		},
@@ -93,16 +97,18 @@
 		fetch : function(callback) {
 			var self = this,
 				json = this.toJSON();
-			this.fireEvent('fetchstart');
+			callback = callback || noop;
+			this.emit('beforefetch, fetchstart', this);
 			json.id = this.id || json.id;
 			$.net.get($.template(this.url, json), function(success, json) {
-				console.log('fetch() callback: ', success, json);
-				if (success===true) {
-					self.fromJSON(json);
-					self.synced = true;
+				if (!success) {
+					self.emit('fetcherror', self);
+					return callback.call(self, 'Error: '+json, null);
 				}
-				self.fireEvent('fetchend');
-				callback.call(this, success ? null : ('Error: '+json), success ? json : null);
+				self.fromJSON(json);
+				self.synced = true;
+				self.emit('fetch, fetchend', self);
+				callback.call(self, null, json);
 			});
 			return this;
 		},
@@ -114,20 +120,25 @@
 			if (this.initialized!==true) {
 				return callback();
 			}
-			this.fireEvent('syncstart');
+			this.emit('beforesync, syncstart', this);
 			json = this.toJSON();
 			delete json.localId;
 			$.net.post($.template(this.url, json), json, function(success, json) {
-				console.log('sync() callback: ', arguments);
+				if (!success) {
+					self.emit('syncerror', json);
+					return callback.call(self, 'Error: '+json, null);
+				}
 				self.synced = true;
-				self.fireEvent('syncend');
-				callback.call(this, success ? null : ('Error: '+json), success ? json : null);
+				self.id = $.delve(json, self.idPath);
+				self.emit('sync, syncend', self);
+				callback.call(self, null, json);
 			});
 			return this;
 		},
 
 		_fetchIfNotSynced : function(callback) {
 			var self = this;
+			callback = callback || noop;
 			if (this.synced===true) {
 				return setTimeout(function() {
 					callback.call(self, true);
