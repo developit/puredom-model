@@ -9,8 +9,8 @@ module.exports = function(grunt) {
 					banner: '/*! <%= pkg.name %> <%= pkg.version %> */\n'
 				},
 				files: {
-					'puredom.Model.min.js': [
-						'puredom.Model.js'
+					'puredom-model.min.js': [
+						'puredom-model.js'
 					]
 				}
 			}
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 					'-W041' : true,
 					'-W030' : true
 				},
-				src : ['puredom.Model.js']
+				src : ['puredom-model.js']
 			},
 			test : {
 				options : {
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
 				interrupt : true
 			},
 			src : {
-				files : ['puredom.Model.js'],
+				files : ['puredom-model.js'],
 				tasks : ['default']
 			},
 			test : {

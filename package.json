@@ -1,10 +1,10 @@
 {
-  "name": "puredom.Model",
+  "name": "puredom-model",
   "version": "0.3.0",
-  "homepage": "https://github.com/developit/puredom.Model",
+  "homepage": "https://github.com/developit/puredom-model",
   "author": "Jason Miller <jason@developit.ca>",
   "description": "A synchronized model base class for puredom.",
-  "main": "puredom.Model.js",
+  "main": "puredom-model.js",
   "scripts": {
     "test": "grunt"
   },

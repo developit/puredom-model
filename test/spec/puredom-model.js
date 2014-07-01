@@ -1,7 +1,8 @@
-describe('puredom.Model', function() {
+describe('puredom-model', function() {
 	it('should be a constructor', function() {
-		expect(puredom.Model).to.exist;
-		expect(puredom.Model).to.be.a.function;
+		expect(puredom.model).to.exist;
+		expect(puredom.model).to.be.a.function;
+		expect(puredom.model).to.equal( puredom.Model );
 	});
 
 	it('should initialize with attributes', function() {
@@ -11,11 +12,11 @@ describe('puredom.Model', function() {
 			};
 
 		expect(function() {
-			model = new puredom.Model(attrs);
+			model = puredom.model(attrs);
 		}).not.to.throw;
 
-		model = new puredom.Model(attrs);
-		expect( model ).to.be.an.instanceof( puredom.Model );
+		model = puredom.model(attrs);
+		expect( model ).to.be.an.instanceof( puredom.model );
 		expect( model.attributes ).to.deep.equal( attrs );
 	});
 
@@ -24,11 +25,11 @@ describe('puredom.Model', function() {
 			id = 'test-id';
 
 		expect(function() {
-			model = new puredom.Model(id);
+			model = puredom.model(id);
 		}).not.to.throw;
 
-		model = new puredom.Model(id);
-		expect( model ).to.be.an.instanceof( puredom.Model );
+		model = puredom.model(id);
+		expect( model ).to.be.an.instanceof( puredom.model );
 		expect( model.id ).to.equal( id );
 	});
 
@@ -36,13 +37,13 @@ describe('puredom.Model', function() {
 
 describe('#set()', function() {
 	it('should set a named attribute', function() {
-		var model = new puredom.Model({});
+		var model = puredom.model({});
 		model.set('key', 'value');
 		expect( model.attributes.key ).to.equal( 'value' );
 	});
 
 	it('should update a named attribute', function() {
-		var model = new puredom.Model({
+		var model = puredom.model({
 			key : 'value'
 		});
 		model.set('key', 'new-value');
@@ -50,7 +51,7 @@ describe('#set()', function() {
 	});
 
 	it('should fire a change event', function() {
-		var model = new puredom.Model({
+		var model = puredom.model({
 				key : 'old-value'
 			}),
 			change = sinon.spy();
@@ -61,14 +62,14 @@ describe('#set()', function() {
 	});
 
 	it('should update the local cache', function() {
-		var model = new puredom.Model();
+		var model = puredom.model();
 		model.cache = sinon.spy();
 		model.set('key', 'value');
 		expect( model.cache ).to.have.been.calledOnce;
 	});
 
 	it('should sync changes to the server', function() {
-		var model = new puredom.Model();
+		var model = puredom.model();
 		model.sync = sinon.spy();
 		model.set('key', 'value');
 		expect( model.sync ).to.have.been.calledOnce;
@@ -77,7 +78,7 @@ describe('#set()', function() {
 
 describe('#get()', function() {
 	it('should return a named attribute', function() {
-		var model = new puredom.Model({
+		var model = puredom.model({
 			key : 'value'
 		});
 		expect( model.get('key') ).to.equal( 'value' );
@@ -96,7 +97,7 @@ describe('#toJSON()', function() {
 			baz : 'bat'
 		};
 
-		var model = new puredom.Model(attrs);
+		var model = puredom.model(attrs);
 
 		expect( model.toJSON() ).to.deep.equal( attrs );
 	});
@@ -109,7 +110,7 @@ describe('#fromJSON()', function() {
 			baz : 'bat'
 		};
 
-		var model = new puredom.Model({
+		var model = puredom.model({
 			overwrite : 'me'
 		});
 

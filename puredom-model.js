@@ -10,7 +10,7 @@
 		window.puredom.Model = factory(window.puredom);
 	}
 }(function($) {
-	/** @exports Model as puredom.Model */
+	/** @exports Model as puredom.model */
 	
 	function noop() {}
 
@@ -19,6 +19,10 @@
 	function Model(attributes, callback) {
 		var args = [].slice.call(arguments),
 			self = this;
+		
+		if (this===$ || !(this instanceof Model)) {
+			return new Model(args[0], args[1], args[2]);
+		}
 		
 		this.attributes = {};
 		$.EventEmitter.call(this);
@@ -172,6 +176,6 @@
 	});
 
 	// Come on, it'll be fun
-	$.Model = Model.Model = Model;
+	$.model = $.Model = Model.Model = Model;
 	return Model;
 }));
