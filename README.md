@@ -1,9 +1,82 @@
 puredom.Model ![Version](http://img.shields.io/badge/version-0.1.1-brightgreen.svg?style=flat) ⎔ [![Build Status](https://img.shields.io/travis/developit/puredom.Model.svg?style=flat&branch=master)](https://travis-ci.org/developit/puredom.Model) 
 =============
+
 A synchronized model base class for puredom.
 
 
----
+Usage
+=====
+
+```JavaScript
+// Grab via browserify, AMD or <script>:
+var Model = require('puredom.Model'),
+	$ = require('puredom'),
+	db = new $.LocalStorage('babies');
+
+
+// Create a class that inherits from Model
+function Fox(attributesOrId, callback) {
+	Model.call(this, attributesOrId, db, callback);
+}
+
+$.inherits(Fox, Model);
+
+$.extend(Fox.prototype, {
+	type : 'Fox',
+	url : '/api/fox/{{id}}',
+	
+	/** Check if the fox is in posession of bacon */
+	hasBacon : function() {
+		return this.get('bacon') > 0;
+	},
+	
+	/** Give the fox some bacon */
+	giveBacon : function(amount) {
+		var bacon = this.get('bacon') || 0;
+		this.set('bacon', bacon + amount);
+	}
+});
+
+
+// Create a new Fox:
+var fox = new Fox({ bacon:0 }, function(err) {
+	if (err) throw new Error(err);
+	
+	// set() and get() can be used synchronously after initialization:
+	fox.set('xp', 42);
+	fox.get('xp');		// 42
+	
+	// Try out those accessor methods:
+	fox.hasBacon();		// false
+	fox.giveBacon(1);
+	fox.hasBacon();		// true
+	
+	// Any set() or sync() call triggers a sync:
+	fox.synced;			// false
+	fox.on('syncend', function() {
+		fox.synced;		// true
+	});
+	
+	// Synchronization can also be done manually:
+	fox.sync(function(err) {
+		// saved
+	});
+});
+
+
+// Work with an existing Fox:
+var id = '24g08h275na';
+
+// Creating using an ID triggers a fetch() during initialization
+var fox = new Fox(id, function(err) {
+	if (err) throw new Error(err);
+	
+	fox.get('bacon');		// 1
+	fox.giveBacon(5);
+	fox.get('bacon');		// 6
+});
+```
+
 
 License
 =======
