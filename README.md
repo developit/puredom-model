@@ -68,12 +68,12 @@ var fox = new Fox({ bacon:0 }, function(err) {
 var id = '24g08h275na';
 
 // Creating using an ID triggers a fetch() during initialization
-var fox = new Fox(id, function(err) {
+var kit = new Fox(id, function(err) {
 	if (err) throw new Error(err);
 	
-	fox.get('bacon');		// 1
-	fox.giveBacon(5);
-	fox.get('bacon');		// 6
+	kit.get('bacon');		// 1
+	kit.giveBacon(5);
+	kit.get('bacon');		// 6
 });
 ```
 
