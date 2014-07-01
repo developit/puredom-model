@@ -5,7 +5,7 @@ A synchronized model base class for puredom.
 
 
 Usage
-=====
+-----
 
 ```JavaScript
 // Grab via browserify, AMD or <script>:
@@ -79,7 +79,7 @@ var fox = new Fox(id, function(err) {
 
 
 License
-=======
+-------
 This plugin is available under the BSD-3-Clause License:
 
 >	Copyright (c) Jason Miller. All rights reserved.
