@@ -19,6 +19,8 @@
 	function Model(attributes, callback) {
 		var args = [].slice.call(arguments),
 			self = this;
+		
+		this.attributes = {};
 		$.EventEmitter.call(this);
 		
 		if (arguments.length===3) {
