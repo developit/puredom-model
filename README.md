@@ -1,4 +1,4 @@
-puredom-model ![Version](http://img.shields.io/github/release/developit/puredom-model.svg?style=flat) ⎔ [![Build Status](https://img.shields.io/travis/developit/puredom-model.svg?style=flat&branch=master)](https://travis-ci.org/developit/puredom-model) 
+puredom-model [![Version](https://img.shields.io/npm/v/puredom-model.svg?style=flat)](https://www.npmjs.org/package/puredom-model) ⎔ [![Build Status](https://img.shields.io/travis/developit/puredom-model.svg?style=flat&branch=master)](https://travis-ci.org/developit/puredom-model) 
 =============
 
 A synchronized model base class for puredom.
