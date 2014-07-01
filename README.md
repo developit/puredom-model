@@ -1,4 +1,4 @@
-puredom.Model ![Version](http://img.shields.io/badge/version-0.1.1-brightgreen.svg?style=flat) ⎔ [![Build Status](https://img.shields.io/travis/developit/puredom.Model.svg?style=flat&branch=master)](https://travis-ci.org/developit/puredom.Model) 
+puredom.Model ![Version](http://img.shields.io/github/release/developit/puredom.Model.svg?style=flat) ⎔ [![Build Status](https://img.shields.io/travis/developit/puredom.Model.svg?style=flat&branch=master)](https://travis-ci.org/developit/puredom.Model) 
 =============
 
 A synchronized model base class for puredom.
