@@ -91,9 +91,9 @@
 		},
 
 		fromCache : function(db) {
-			var id = this.localId || this.id,
-				dba = db || this.db,
-				json = dba && id && dba.getValue('$.Model.'+this.type+'.'+id);
+			var id = this.localId || this.id;
+			db = db || this.db;
+			json = db && id && db.getValue('$.Model.'+this.type+'.'+id);
 			if (json) {
 				this.fromJSON(json);
 			}
