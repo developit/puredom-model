@@ -82,10 +82,10 @@
 		},
 
 		cache : function(db) {
-			var id = this.localId || this.id,
-				dba = db || this.db;
-			if (dba) {
-				dba.setValue('$.Model.'+this.type+'.'+id, this.toJSON());
+			var id = this.localId || this.id;
+			db = db || this.db;
+			if (db) {
+				db.setValue('$.Model.'+this.type+'.'+id, this.toJSON());
 			}
 			return this;
 		},

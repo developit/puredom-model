@@ -1,6 +1,6 @@
 {
   "name": "puredom-model",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "homepage": "https://github.com/developit/puredom-model",
   "author": "Jason Miller <jason@developit.ca>",
   "description": "A synchronized model base class for puredom.",
